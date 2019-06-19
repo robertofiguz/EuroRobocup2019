@@ -90,15 +90,7 @@ Incluí:
 	 - Distancia que define existencia de obstaculo predefinida na libraria para 40cm;
 	
      
-    - Movimentar para a esquerda: `Base.andaresquerda(tempo);`
-    
-    	Notas:
-
-		 - Retorna uma boolean (True ou False);
-		 - Se "True" existe obstaculo;
-		 - Distancia que define existencia de obstaculo predefinida na libraria para 40cm;
-
-	
+   
      
 
         
