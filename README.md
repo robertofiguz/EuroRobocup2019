@@ -68,9 +68,6 @@ Incluí:
 	
      
     - Movimentar para a esquerda: `Base.andaresquerda(tempo);`
-
-- Sonar:
-    -Verificar se existe obstaculo na frente do sonar: `Base.medir();` 
     
     	Notas: -retorna uma boolean (True ou False);
 	       -se "True" existe obstaculo;
