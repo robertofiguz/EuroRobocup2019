@@ -19,13 +19,21 @@ Incluí:
 ## Funções
 
 - Funções de movimento:
-	- Movimentar para a frente: `Base.andarfrente(tempo);` 
+    - Movimentar para a frente: `Base.andarfrente(tempo);` 
     - Movimentar para trás: `Base.andartras(tempo);`
     - Parar o movimento: `Base.parar(tempo);`
     - Rodar no sentido dos ponteiros do relogio: `Base.rodarCW(tempo);`
     - Rodar no sentido contrario dos ponteiros do relogio: `Base.rodarCCW(tempo);`
     - Movimentar para a direita: `Base.andardireita(tempo);`
     - Movimentar para a esquerda: `Base.andaresquerda(tempo);`
+
+- Sonar:
+    -Verificar se existe obstaculo na frente do sonar: `Base.medir();` 
+    
+    	Notas: -retorna uma boolean (True ou False);
+	       -se "True" existe obstaculo;
+	       -distancia que define existencia de obstaculo predefinida na libraria para 40cm;
+	
      
 
          \* "tempo" deve ser substituido pelo tempo de movimento em ms
