@@ -6,10 +6,14 @@
 #include "Arduino.h"
 #include "base.h"
 #include "Wire.h"
-
+#include "Ultrasonic.h"
 
 base::base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1, int motor3_2, int motor4_1, int motor4_2)
 {
+    Serial.begin(19200);
+    trigPin = A3;
+    echoPin = A2;
+
     pinMode(motor1_1, OUTPUT);  // motor 1
     pinMode(motor1_2, OUTPUT);  // motor 1
 
@@ -22,11 +26,50 @@ base::base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1,
     pinMode(motor4_1, OUTPUT);  // motor 4
     pinMode(motor4_2, OUTPUT);  // motor 4
 
+    pinMode(trigPin,OUTPUT);
+    pinMode(echoPin, INPUT);
+
+
+}
+
+bool base::medir(){
+
+  // Clears the trigPin
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration = pulseIn(echoPin, HIGH);
+// Calculating the distance
+distance= duration*0.034/2;
+// Prints the distance on the Serial Monitor
+
+  if (distance<40){
+    return true;
+  }
+  else{
+    return false;
+  }
 
 }
 
 void base::writeToMotors(int vel1, int vel2, int vel3, int vel4, int vel5, int vel6, int vel7, int vel8){
+  motor1_1= 13;
+  motor1_2 = 12;
+  motor2_1 = 11;
+  motor2_2 = 10;
+  motor3_1 = 9;
+  motor3_2 = 8;
+  motor4_1 = 7;
+  motor4_2 = 6;
+
   analogWrite(motor1_1,vel1);
+  Serial.println("ran");
+  Serial.println(motor1_1);
+  Serial.println(vel1);
   analogWrite(motor1_2, vel2);
 
   analogWrite(motor2_1,vel3);
@@ -37,6 +80,7 @@ void base::writeToMotors(int vel1, int vel2, int vel3, int vel4, int vel5, int v
 
   analogWrite(motor4_1,vel7);
   analogWrite(motor4_2,vel8);
+
 }
 
 
@@ -52,10 +96,21 @@ void base::andartras(int tempo)
     delay(tempo); //check if this kinf of delay works, create variable for time
 }
 
+void base::andaresquerda(int tempo)
+{
+  writeToMotors(150,0,0,150,0,150,150,0);
+  delay(tempo);
+}
+
+void base::andardireita(int tempo)
+{
+  writeToMotors(0,150,150,0,150,0,0,150);
+  delay(tempo);
+}
 void base::rodarCW(int tempo)
 {
   //change code for compass and create variable for degrees and use while
-  writeToMotors(0,150,0,150,0,150,0,150);
+  writeToMotors(0,150,150,0,0,150,150,0);
   delay(tempo);
    //delay(tempo); //check if this kinf of delay works, create variable for time
 }
@@ -64,7 +119,7 @@ void base::rodarCW(int tempo)
 void base::rodarCCW(int tempo)
 {
   //change code for compass and create variable for degrees and use while
-  writeToMotors(150,0,150,0,150,0,150,0);
+  writeToMotors(150,0,0,150,150,0,0,150);
   delay(tempo);
 
 
