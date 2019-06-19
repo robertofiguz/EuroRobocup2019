@@ -75,5 +75,4 @@ Incluí:
 	
      
 
-         \* "tempo" deve ser substituido pelo tempo de movimento em ms
-
+        
