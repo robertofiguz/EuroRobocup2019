@@ -24,7 +24,7 @@ Incluí:
     - Parar o movimento: `Base.parar(tempo);`
     - Rodar no sentido dos ponteiros do relogio: `Base.rodarCW(tempo);`
     - Rodar no sentido contrario dos ponteiros do relogio: `Base.rodarCCW(tempo);`
-    - Movimentar para a direita: `Base.andardireita(tempo);``
+    - Movimentar para a direita: `Base.andardireita(tempo);`
     - Movimentar para a esquerda: `Base.andaresquerda(tempo);`
     
     
