@@ -10,7 +10,7 @@
 
 base::base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1, int motor3_2, int motor4_1, int motor4_2)
 {
-    //Wire.begin();
+    Wire.begin();
     Serial.begin(19200);
     trigPin = A3;
     echoPin = A2;
@@ -33,9 +33,19 @@ base::base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1,
 
 }
 
-//void base::bracos(){
+void base::bracosStart(){
+  Wire.beginTransmission(9);
+  Wire.write(1);
+  Wire.endTransmission();
+//while make code run in loop until told otherwise?
 
-//}
+}
+
+void base::bracosStop(){
+  Wire.beginTransmission(9);
+  Wire.write(0);
+  Wire.endTransmission();
+}
 
 bool base::medir(){
 
@@ -87,7 +97,17 @@ void base::writeToMotors(int vel1, int vel2, int vel3, int vel4, int vel5, int v
   analogWrite(motor4_2,vel8);
 
 }
+void base::diagonaldireita(int tempo)
+{
+    writeToMotors(150,0,150,0,150,0,150,0);
+    delay(tempo); //check if this kinf of delay works, create variable for time
+}
 
+void base::diagonalesquerda(int tempo)
+{
+  writeToMotors(150,0,150,0,150,0,150,0);
+  delay(tempo); //check if this kinf of delay works, create variable for time
+}
 
 void base::andarfrente(int tempo)
 {
