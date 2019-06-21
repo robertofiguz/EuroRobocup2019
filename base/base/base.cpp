@@ -10,6 +10,7 @@
 
 base::base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1, int motor3_2, int motor4_1, int motor4_2)
 {
+    //Wire.begin();
     Serial.begin(19200);
     trigPin = A3;
     echoPin = A2;
@@ -31,6 +32,10 @@ base::base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1,
 
 
 }
+
+//void base::bracos(){
+
+//}
 
 bool base::medir(){
 
