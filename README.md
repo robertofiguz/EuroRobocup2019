@@ -2,7 +2,7 @@
 
 No repositório encontram se todos os ficheiros para o Eurobocup junior 2019.
 Incluí:
-	
+
 
  - Modelos 3d;
  - Libraria;
@@ -20,30 +20,23 @@ Incluí:
 ## Funções
 
  - Funções de movimento:
-    - Movimentar para a frente: `Base.andarfrente(tempo, velocidade);` 
+    - Movimentar para a frente: `Base.andarfrente(tempo, velocidade);`
     - Movimentar para trás: `Base.andartras(tempo, velocidade);`
     - Parar o movimento: `Base.parar(tempo, velocidade);`
     - Movimentar para a direita: `Base.andardireita(tempo, velocidade);`
     - Movimentar para a esquerda: `Base.andaresquerda(tempo, velocidade);`
     - Rodar no sentido dos ponteiros do relogio: `Base.rodarCW(tempo);`
     - Rodar no sentido contrario dos ponteiros do relogio: `Base.rodarCCW(tempo);`    
-    
-    
-     \* "tempo" deve ser substituido pelo tempo de movimento em ms
 
+
+     \* "tempo" deve ser substituido pelo tempo de movimento em ms
+		 \* "velocidade" deve ser substituido por um valor entre 0-100
+		 
  - Sonar:
-    -Verificar se existe obstaculo na frente do sonar: `Base.medir();` 
-    
-	 Notas: 
+    -Verificar se existe obstaculo na frente do sonar: `Base.medir();`
+
+	 Notas:
 
 	 - Retorna uma boolean (True ou False);
 	 - Se "True" existe obstaculo;
 	 - Distancia que define existencia de obstaculo predefinida na libraria para 40cm;
-	
-     
-   
-     
-
-        
-
-        
