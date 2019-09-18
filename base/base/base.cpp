@@ -62,6 +62,7 @@ distance= duration*0.034/2;
 }
 
 void base::writeToMotors(int vel1, int vel2, int vel3, int vel4, int vel5, int vel6, int vel7, int vel8){
+//check if i can delete this
   motor1_1= 13;
   motor1_2 = 12;
   motor2_1 = 11;
@@ -70,11 +71,11 @@ void base::writeToMotors(int vel1, int vel2, int vel3, int vel4, int vel5, int v
   motor3_2 = 8;
   motor4_1 = 7;
   motor4_2 = 6;
+/////////////////////
+
+//insert code for initial propultion to get lower speeds
 
   analogWrite(motor1_1,vel1);
-  Serial.println("ran");
-  Serial.println(motor1_1);
-  Serial.println(vel1);
   analogWrite(motor1_2, vel2);
 
   analogWrite(motor2_1,vel3);
