@@ -88,27 +88,36 @@ void base::writeToMotors(int vel1, int vel2, int vel3, int vel4, int vel5, int v
 
 }
 
+int base::convert(int vel){
+  vel = map(vel, 0, 100, 0, 255);
+  return(vel);
+}
+
 
 void base::andarfrente(int tempo, int vel)
 {
+    convert(vel);
     writeToMotors(vel,0,vel,0,vel,0,vel,0);
     delay(tempo); //check if this kinf of delay works, create variable for time
 }
 
 void base::andartras(int tempo, int vel)
 {
+    convert(vel);
     writeToMotors(0,vel,0,vel,0,vel,0,vel);
     delay(tempo); //check if this kinf of delay works, create variable for time
 }
 
 void base::andaresquerda(int tempo, int vel)
 {
+  convert(vel);
   writeToMotors(vel,0,0,vel,0,vel,vel,0);
   delay(tempo);
 }
 
 void base::andardireita(int tempo, int vel)
 {
+  convert(vel);
   writeToMotors(0,vel,vel,0,vel,0,0,vel);
   delay(tempo);
 }
