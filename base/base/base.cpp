@@ -95,9 +95,22 @@ int base::convert(int vel){
 }
 
 
+void base::StepUp(int vel){
+  int x = 0;
+  while(x<vel){
+    int velSetUp = 100-x;
+        writeToMotors(velSetUp,0,velSetUp,0,velSetUp,0,velSetUp,0);
+        x++;
+        //probably working - needs testing
+  }
+
+}
+
+
 void base::andarfrente(int tempo, int vel)
 {
     convert(vel);
+    StepUp(vel);
     writeToMotors(vel,0,vel,0,vel,0,vel,0);
     delay(tempo); //check if this kinf of delay works, create variable for time
 }

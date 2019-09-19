@@ -11,7 +11,7 @@ void loop() {
   Base.medir();
   if(Base.medir()){
     Base.andarfrente(1000, 100); //function(delay)
-    Base.parar(5000,50);//function(delay)
+    Base.parar(5000);//function(delay)
     Base.andartras(1000,100); //function(delay)
     Base.rodarCW(1000);
     Base.rodarCCW(1000);
