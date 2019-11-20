@@ -7,6 +7,7 @@
 #include "base.h"
 #include "Wire.h"
 #include "Ultrasonic.h"
+#include "SoftwareSerial.h"
 
 base::base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1, int motor3_2, int motor4_1, int motor4_2)
 {
@@ -14,7 +15,8 @@ base::base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1,
     Serial.begin(19200);
     trigPin = A3;
     echoPin = A2;
-
+    SoftwareSerial mySerial(2, 3); // RX, TX
+    mySerial.begin(38400);
     pinMode(motor1_1, OUTPUT);  // motor 1
     pinMode(motor1_2, OUTPUT);  // motor 1
 
@@ -31,6 +33,12 @@ base::base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1,
     pinMode(echoPin, INPUT);
 //if omni is defenitive define motors here
 
+}
+
+void base::Send(int data){
+  if (mySerial.available()) {
+    Serial.write(data);
+  }
 }
 
 //void base::bracos(){
