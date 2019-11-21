@@ -13,7 +13,7 @@ class base
 {
 public:
   //bussola
-    void ler_bussola();
+    int ler_bussola();
 //-------------------
     base();
 //funções movimento
@@ -21,8 +21,7 @@ public:
     void andartras(int tempo, int vel);
     void andaresquerda(int tempo, int vel);
     void andardireita(int tempo, int vel);
-    void rodarCW(int tempo);
-    void rodarCCW(int tempo);
+    void rodar(int angulo);
     void parar(int tempo);
     void rodarPublico();
     void send(int data);

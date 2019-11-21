@@ -134,23 +134,37 @@ void base::andardireita(int tempo, int vel)
   writeToMotors(0,vel,vel,0,vel,0,0,vel);
   delay(tempo);
 }
-void base::rodarCW(int tempo)
+
+
+
+void base::rodar(int degrees)
 {
-  //change code for compass and create variable for degrees and use while
-  writeToMotors(0,150,150,0,0,150,150,0);
-  delay(tempo);
-   //delay(tempo); //check if this kinf of delay works, create variable for time
+
+int orientInit = ler_bussola();
+int targetAngle = orientInit+degrees;
+
+if (targetAngle > 360){
+  targetAngle = targetAngle-360;
+}
+if(targetAngle<0){
+  targetAngle = 360-targetAngle;
+}
+
+if(degrees<0){
+  while(ler_bussola()<targetAngle-5 || ler_bussola()>targetAngle+5){
+    writeToMotors(100,0,0,100,100,0,0,100);
+  }
+}
+if(degrees>0){
+  while(ler_bussola()<targetAngle-5 || ler_bussola()>targetAngle+5){
+    writeToMotors(0,100,100,0,0,100,100,0);
+  }
 }
 
 
-void base::rodarCCW(int tempo)
-{
-  //change code for compass and create variable for degrees and use while
-  writeToMotors(150,0,0,150,150,0,0,150);
-  delay(tempo);
-
-
 }
+
+
 
 void base::parar(int tempo)
 {
@@ -185,7 +199,7 @@ void base::rodarPublico()
 }
 
 
-void base::ler_bussola()
+int base::ler_bussola()
 {
   Wire.beginTransmission(ADDRESS);           //starts communication with CMPS10
   Wire.write(2);                              //Sends the register we wish to start reading from
@@ -200,4 +214,5 @@ void base::ler_bussola()
   bearing = ((highByte<<8)+lowByte)/10;      // Calcula full bearing
   fine = ((highByte<<8)+lowByte)%10;         // Calcula decimal place of bearing
   delay(100);
+  return(roll);
 }
