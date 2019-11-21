@@ -9,7 +9,7 @@
 #include "Ultrasonic.h"
 #include "SoftwareSerial.h"
 
-base::base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1, int motor3_2, int motor4_1, int motor4_2)
+base::base()
 {
     //Wire.begin();
     Serial.begin(19200);
@@ -17,17 +17,18 @@ base::base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1,
     echoPin = A2;
     SoftwareSerial mySerial(2, 3); // RX, TX
     mySerial.begin(38400);
-    pinMode(motor1_1, OUTPUT);  // motor 1
-    pinMode(motor1_2, OUTPUT);  // motor 1
 
-    pinMode(motor2_1, OUTPUT);  // motor 2
-    pinMode(motor2_2, OUTPUT);  // motor 2
+    pinMode(13, OUTPUT);  // motor 1
+    pinMode(12, OUTPUT);  // motor 1
 
-    pinMode(motor3_1, OUTPUT);  // motor 3
-    pinMode(motor3_2, OUTPUT);  // motor 3
+    pinMode(11, OUTPUT);  // motor 2
+    pinMode(10, OUTPUT);  // motor 2
 
-    pinMode(motor4_1, OUTPUT);  // motor 4
-    pinMode(motor4_2, OUTPUT);  // motor 4
+    pinMode(9, OUTPUT);  // motor 3
+    pinMode(8, OUTPUT);  // motor 3
+
+    pinMode(7, OUTPUT);  // motor 4
+    pinMode(6, OUTPUT);  // motor 4
 
     pinMode(trigPin,OUTPUT);
     pinMode(echoPin, INPUT);
@@ -103,22 +104,12 @@ int base::convert(int vel){
 }
 
 
-void base::StepUp(int vel){
-  int x = 0;
-  while(x<vel){
-    int velSetUp = 100-x;
-        writeToMotors(velSetUp,0,velSetUp,0,velSetUp,0,velSetUp,0);
-        x++;
-        //probably working - needs testing
-  }
 
-}
 
 
 void base::andarfrente(int tempo, int vel)
 {
     convert(vel);
-    StepUp(vel);
     writeToMotors(vel,0,vel,0,vel,0,vel,0);
     delay(tempo); //check if this kinf of delay works, create variable for time
 }
