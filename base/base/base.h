@@ -25,7 +25,7 @@ public:
     void rodarCCW(int tempo);
     void parar(int tempo);
     void rodarPublico();
-    void send();
+    void send(int data);
 //-------------------
     bool medir();
 
@@ -42,12 +42,11 @@ public:
     int vel8;
     int data;
 
-
   private:
     #define ADDRESS 0x60
     byte highByte, lowByte, fine;
     int bearing, pitch, roll;
-    
+
     int distance;
     int motor1_1;
     int motor1_2;
