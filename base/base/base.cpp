@@ -7,46 +7,38 @@
 #include "base.h"
 #include "Wire.h"
 #include "Ultrasonic.h"
-#include "SoftwareSerial.h"
 
-base::base()
+Base::Base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1, int motor3_2, int motor4_1, int motor4_2)
 {
-    //Wire.begin();
+   
     Serial.begin(19200);
+    
     trigPin = A3;
     echoPin = A2;
-    SoftwareSerial mySerial(2, 3); // RX, TX
-    mySerial.begin(38400);
+    Wire.begin();
+    pinMode(motor1_1, OUTPUT);  // motor 1
+    pinMode(motor1_2, OUTPUT);  // motor 1
 
-    pinMode(13, OUTPUT);  // motor 1
-    pinMode(12, OUTPUT);  // motor 1
+    pinMode(motor2_1, OUTPUT);  // motor 2
+    pinMode(motor2_2, OUTPUT);  // motor 2
 
-    pinMode(11, OUTPUT);  // motor 2
-    pinMode(10, OUTPUT);  // motor 2
+    pinMode(motor3_1, OUTPUT);  // motor 3
+    pinMode(motor3_2, OUTPUT);  // motor 3
 
-    pinMode(9, OUTPUT);  // motor 3
-    pinMode(8, OUTPUT);  // motor 3
-
-    pinMode(7, OUTPUT);  // motor 4
-    pinMode(6, OUTPUT);  // motor 4
+    pinMode(motor4_1, OUTPUT);  // motor 4
+    pinMode(motor4_2, OUTPUT);  // motor 4
 
     pinMode(trigPin,OUTPUT);
     pinMode(echoPin, INPUT);
 //if omni is defenitive define motors here
-
+    
 }
 
-void base::Send(int data){
-  if (mySerial.available()) {
-    Serial.write(data);
-  }
-}
-
-//void base::bracos(){
+//void Base::bracos(){
 
 //}
 
-bool base::medir(){
+bool Base::medir(){
 
   // Clears the trigPin
 digitalWrite(trigPin, LOW);
@@ -70,10 +62,10 @@ distance= duration*0.034/2;
 
 }
 
-void base::writeToMotors(int vel1, int vel2, int vel3, int vel4, int vel5, int vel6, int vel7, int vel8){
+void Base::writeToMotors(int vel1, int vel2, int vel3, int vel4, int vel5, int vel6, int vel7, int vel8){
 //check if i can delete this
-  motor1_1= 13;
-  motor1_2 = 12;
+  motor1_1= 5;
+  motor1_2 = 4;
   motor2_1 = 11;
   motor2_2 = 10;
   motor3_1 = 9;
@@ -98,121 +90,161 @@ void base::writeToMotors(int vel1, int vel2, int vel3, int vel4, int vel5, int v
 
 }
 
-int base::convert(int vel){
+int Base::convert(int vel){
   vel = map(vel, 0, 100, 0, 255);
   return(vel);
 }
 
 
+void Base::StepUp(int vel){
+  int x = 0;
+  while(x<vel){
+    int velSetUp = 100-x;
+        writeToMotors(velSetUp,0,velSetUp,0,velSetUp,0,velSetUp,0);
+        x++;
+        //probably working - needs testing
+  }
 
-
-
-void base::andarfrente(int tempo, int vel)
-{
-    convert(vel);
-    writeToMotors(vel,0,vel,0,vel,0,vel,0);
-    delay(tempo); //check if this kinf of delay works, create variable for time
 }
 
-void base::andartras(int tempo, int vel)
+
+void Base::andarfrente(int tempo, int vel)
+{
+    vel = convert(vel);
+    //StepUp(vel);
+
+    writeToMotors(vel,0,vel,0,vel,0,vel,0);
+    Serial.println("andar");
+    delay(tempo); //check if this kinf of delay works, create variable for time
+    Serial.println("parar");
+    parar();
+} 
+
+void Base::andartras(int tempo, int vel)
 {
     convert(vel);
     writeToMotors(0,vel,0,vel,0,vel,0,vel);
     delay(tempo); //check if this kinf of delay works, create variable for time
 }
 
-void base::andaresquerda(int tempo, int vel)
+void Base::andaresquerda(int tempo, int vel)
 {
   convert(vel);
   writeToMotors(vel,0,0,vel,0,vel,vel,0);
   delay(tempo);
 }
 
-void base::andardireita(int tempo, int vel)
+void Base::andardireita(int tempo, int vel)
 {
   convert(vel);
   writeToMotors(0,vel,vel,0,vel,0,0,vel);
   delay(tempo);
 }
-
-
-
-void base::rodar(int degrees)
-{
-
-int orientInit = ler_bussola();
-int targetAngle = orientInit+degrees;
-
-if (targetAngle > 360){
-  targetAngle = targetAngle-360;
-}
-if(targetAngle<0){
-  targetAngle = 360-targetAngle;
-}
-
-if(degrees<0){
-  while(ler_bussola()<targetAngle-5 || ler_bussola()>targetAngle+5){
-    writeToMotors(100,0,0,100,100,0,0,100);
-  }
-}
-if(degrees>0){
-  while(ler_bussola()<targetAngle-5 || ler_bussola()>targetAngle+5){
-    writeToMotors(0,100,100,0,0,100,100,0);
-  }
-}
-
-
-}
-
-
-
-void base::parar(int tempo)
+void Base::rodarCW(int tempo)
 {
   //change code for compass and create variable for degrees and use while
-  writeToMotors(0,0,0,0,0,0,0,0);
-
+  writeToMotors(0,150,150,0,0,150,150,0);
   delay(tempo);
+   //delay(tempo); //check if this kinf of delay works, create variable for time
 }
 
 
-
-void base::rodarPublico()
+void Base::rodarCCW(int tempo)
 {
   //change code for compass and create variable for degrees and use while
-    ler_bussola();
-    if(bearing<200 || bearing>220){
-    while(bearing<200 || bearing>220)  // Enquanto o robô estiver desalinhado   ||->ou lógico   &&->e lógico (valor inicial)
- {
-   rodarCW(100);//ver se e este ou rodar CCW
-   ler_bussola();        //Ler a bússola
- }
-}else if (bearing<0 || bearing>40){
-  while(bearing<0 || bearing>40)  // Enquanto o robô estiver desalinhado   ||->ou lógico   &&->e lógico (valor inicial)
+  writeToMotors(150,0,0,150,150,0,0,150);
+  delay(tempo);
+
+
+}
+
+void Base::parar(int tempo)
 {
- rodarCCW(100);//ver se e este ou rodar CCW
- ler_bussola();        //Ler a bússola
+  //change code for compass and create variable for degrees and use while
+  if (tempo == 0){
+    writeToMotors(0,0,0,0,0,0,0,0);
+  }else{
+    writeToMotors(0,0,0,0,0,0,0,0);
+    delay(tempo);
+  }
+  
 }
-}
- parar(10);
 
 
-}
 
-
-int base::ler_bussola()
+void Base::rodarPublico()
 {
-  Wire.beginTransmission(ADDRESS);           //starts communication with CMPS10
-  Wire.write(2);                              //Sends the register we wish to start reading from
+//  //change code for compass and create variable for degrees and use while
+//    ler_bussola();
+//    if(bearing<200 || bearing>220){
+//    while(bearing<200 || bearing>220)  // Enquanto o robô estiver desalinhado   ||->ou lógico   &&->e lógico (valor inicial)
+// {
+//   rodarCW(100);//ver se e este ou rodar CCW
+//   ler_bussola();        //Ler a bússola
+// }
+//}else if (bearing<0 || bearing>40){
+//  while(bearing<0 || bearing>40)  // Enquanto o robô estiver desalinhado   ||->ou lógico   &&->e lógico (valor inicial)
+//{
+// rodarCCW(100);//ver se e este ou rodar CCW
+// ler_bussola();        //Ler a bússola
+//}
+//}
+
+  Serial.println(0);
+}
+
+
+
+struct compass_values Base::ler_bussola()
+{
+  Wire.beginTransmission(CMPS11_ADDRESS);  //starts communication with CMPS11
+  Wire.write(ANGLE_8);                     //Sends the register we wish to start reading from
   Wire.endTransmission();
-
-  Wire.requestFrom(ADDRESS, 4);              // Request 4 bytes from CMPS10
-  while(Wire.available() < 4);               // Wait for bytes to become available
-  highByte=Wire.read();
-  lowByte = Wire.read();
+  // Request 5 bytes from the CMPS11
+  // this will give us the 8 bit bearing, 
+  // both bytes of the 16 bit bearing, pitch and roll
+  Wire.requestFrom(CMPS11_ADDRESS, 5);       
+  while(Wire.available() < 5){
+  };        // Wait for all bytes to come back
+  
+  angle8 = Wire.read();               // Read back the 5 bytes
+  high_byte = Wire.read();
+  low_byte = Wire.read();
   pitch = Wire.read();
   roll = Wire.read();
-  bearing = ((highByte<<8)+lowByte)/10;      // Calcula full bearing
-  fine = ((highByte<<8)+lowByte)%10;         // Calcula decimal place of bearing
-  delay(100);
-  return(roll);
+  
+  angle16 = high_byte;                 // Calculate 16 bit angle
+  angle16 <<= 8;
+  angle16 += low_byte;
+    
+  compass.roll = roll;
+  compass.pitch = pitch;
+  compass.angle16 = angle16;
+  compass.angle8 = angle8;    
+  return compass;
+}
+
+struct rgb_values Base::ler_rgb()
+{
+  if (!tcs.begin()) {
+    Serial.println("No TCS34725 found ... check your connections");
+    while (1); // halt!
+  };
+  uint16_t clear, red, green, blue;
+  tcs.getRGBC(&red, &green, &blue, &clear);
+  tcs.lock();  // turn off LED
+  // Figure out some basic hex code for visualization
+
+  uint32_t sum = clear;
+
+  float r, g, b;
+  r = red; r /= sum;
+  g = green; g /= sum;
+  b = blue; b /= sum;
+  r *= 256; g *= 256; b *= 256;
+
+  rgb.red = r;
+  rgb.green = g;
+  rgb.blue = b;
+  return rgb;
 }
