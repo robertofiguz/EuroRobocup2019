@@ -12,7 +12,8 @@ void loop() {
   Base.andartras(tempo, velocidade);
   Base.andaresquerda(tempo, velocidade);
   Base.andardireita(tempo, velocidade);
-  Base.rodar(angulo) 
+  Base.rodarCW(tempo);
+  Base.rodarCCW(tempo); 
   Base.parar(tempo);
 
 }

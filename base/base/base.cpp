@@ -112,7 +112,6 @@ void Base::andarfrente(int tempo, int vel)
 {
     vel = convert(vel);
     //StepUp(vel);
-
     writeToMotors(vel,0,vel,0,vel,0,vel,0);
     Serial.println("andar");
     delay(tempo); //check if this kinf of delay works, create variable for time
@@ -122,29 +121,33 @@ void Base::andarfrente(int tempo, int vel)
 
 void Base::andartras(int tempo, int vel)
 {
-    convert(vel);
+    vel = convert(vel);
     writeToMotors(0,vel,0,vel,0,vel,0,vel);
     delay(tempo); //check if this kinf of delay works, create variable for time
+    parar();
 }
 
 void Base::andaresquerda(int tempo, int vel)
 {
-  convert(vel);
+  vel = convert(vel);
   writeToMotors(vel,0,0,vel,0,vel,vel,0);
   delay(tempo);
+  parar();
 }
 
 void Base::andardireita(int tempo, int vel)
 {
-  convert(vel);
+  vel = convert(vel);
   writeToMotors(0,vel,vel,0,vel,0,0,vel);
   delay(tempo);
+  parar();
 }
 void Base::rodarCW(int tempo)
 {
   //change code for compass and create variable for degrees and use while
   writeToMotors(0,150,150,0,0,150,150,0);
   delay(tempo);
+  parar();
    //delay(tempo); //check if this kinf of delay works, create variable for time
 }
 
@@ -154,8 +157,7 @@ void Base::rodarCCW(int tempo)
   //change code for compass and create variable for degrees and use while
   writeToMotors(150,0,0,150,150,0,0,150);
   delay(tempo);
-
-
+  parar();
 }
 
 void Base::parar(int tempo)
