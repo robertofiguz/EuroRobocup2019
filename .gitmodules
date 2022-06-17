@@ -1,0 +1,6 @@
+[submodule "base/external_libraries/base/external_libraries/DFRobot_TCS34725"]
+	path = base/external_libraries/base/external_libraries/DFRobot_TCS34725
+	url = git@github.com:DFRobot/DFRobot_TCS34725.git
+[submodule "base/base/external_libraries/DFRobot_TCS34725"]
+	path = base/base/external_libraries/DFRobot_TCS34725
+	url = git@github.com:DFRobot/DFRobot_TCS34725.git
