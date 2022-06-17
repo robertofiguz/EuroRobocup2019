@@ -12,7 +12,6 @@ Base::Base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1,
 {
    
     Serial.begin(19200);
-    
     trigPin = A3;
     echoPin = A2;
     Wire.begin();
@@ -31,7 +30,6 @@ Base::Base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1,
     pinMode(trigPin,OUTPUT);
     pinMode(echoPin, INPUT);
 //if omni is defenitive define motors here
-    
 }
 
 //void Base::bracos(){
@@ -39,7 +37,6 @@ Base::Base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1,
 //}
 
 bool Base::medir(){
-
   // Clears the trigPin
 digitalWrite(trigPin, LOW);
 delayMicroseconds(2);
@@ -176,24 +173,35 @@ void Base::parar(int tempo)
 
 void Base::rodarPublico()
 {
-//  //change code for compass and create variable for degrees and use while
-//    ler_bussola();
-//    if(bearing<200 || bearing>220){
-//    while(bearing<200 || bearing>220)  // Enquanto o robô estiver desalinhado   ||->ou lógico   &&->e lógico (valor inicial)
-// {
-//   rodarCW(100);//ver se e este ou rodar CCW
-//   ler_bussola();        //Ler a bússola
-// }
-//}else if (bearing<0 || bearing>40){
-//  while(bearing<0 || bearing>40)  // Enquanto o robô estiver desalinhado   ||->ou lógico   &&->e lógico (valor inicial)
-//{
-// rodarCCW(100);//ver se e este ou rodar CCW
-// ler_bussola();        //Ler a bússola
-//}
-//}
+  //change code for compass and create variable for degrees and use while
+    bool is_towards_public=false;
 
-  Serial.println(0);
+    while (!is_towards_public){
+    compass = ler_bussola();
+    double distance = compass.angle16 - initial_angle;
+    double abs_distance = abs(distance);
+    if (abs_distance<5){
+      is_towards_public = true;
+    }
+
+    if (!is_towards_public){
+    if (initial_angle<180 && compass.angle16<180){
+      rodarCCW(100);
+    }else if (initial_angle<180 && compass.angle16>180){
+      rodarCW(100);
+    }
+    else if (initial_angle>180 && compass.angle16<180)
+    {
+      rodarCCW(100);
+    }
+    else if (initial_angle>180 && compass.angle16>180){
+      rodarCW(100);
+    }
+    
+  }
 }
+}
+
 
 
 
@@ -221,8 +229,9 @@ struct compass_values Base::ler_bussola()
     
   compass.roll = roll;
   compass.pitch = pitch;
-  compass.angle16 = angle16;
-  compass.angle8 = angle8;    
+  compass.angle16 = angle16/10;
+  compass.angle8 = angle8;  
+
   return compass;
 }
 
@@ -249,4 +258,10 @@ struct rgb_values Base::ler_rgb()
   rgb.green = g;
   rgb.blue = b;
   return rgb;
+}
+
+void Base::init_compass()
+{
+  compass = ler_bussola();
+  initial_angle = compass.angle16;
 }

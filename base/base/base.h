@@ -42,7 +42,6 @@ public:
     
     struct compass_values ler_bussola();
 //-------------------
-    //Base();
 //funções movimento
     void andarfrente(int tempo, int vel);
     void andartras(int tempo, int vel);
@@ -52,6 +51,7 @@ public:
     void rodarCCW(int tempo);
     void parar(int tempo=0);
     void rodarPublico();
+    void init_compass();
 //-------------------
     bool medir();
     int trigPin;
@@ -74,6 +74,7 @@ public:
     int vel6;
     int vel7;
     int vel8;
+    double initial_angle;
     Base(int motor1_1, int motor1_2, int motor2_1, int motor2_2, int motor3_1, int motor3_2, int motor4_1, int motor4_2);
     void writeToMotors(int vel1, int vel2, int vel3, int vel4, int vel5, int vel6, int vel7, int vel8);//check if this can be on private
     int convert(int vel);
